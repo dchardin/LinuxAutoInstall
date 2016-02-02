@@ -2,19 +2,19 @@
 
 
 #please note that this script is very dirty and still very much
-in-progress. Totally disorganized and mostly untested. At this point,
-it has Fedora 23 XFCE in mind, but you
-will still see some deprecated commands (like yum install instead of
-dnf install". The whole purpose of this script is for me to be able to
-quickly deploy a Fedora 23 desktop system that is customized to my
-liking. Why am I not doing this with Kickstart you ask? Well, I have
-had mixed experiencecs with kickstart when it comes to installing
-packages. The installation often hangs, or the package will be listed
-as "not available". In time, this script may be better integrated as a
-true kickstart postinstall script, but for now, I plan on simply
-firing up a recently imaged computer and then execute this script. I
-will use kickstart for the basics alone (I have a simple kickstart
-file that will partition my disks and create users.)
+#in-progress. Totally disorganized and mostly untested. At this point,
+#it has Fedora 23 XFCE in mind, but you
+#will still see some deprecated commands (like yum install instead of
+#dnf install". The whole purpose of this script is for me to be able to
+#quickly deploy a Fedora 23 desktop system that is customized to my
+#liking. Why am I not doing this with Kickstart you ask? Well, I have
+#had mixed experiencecs with kickstart when it comes to installing
+#packages. The installation often hangs, or the package will be listed
+#as "not available". In time, this script may be better integrated as a
+#true kickstart postinstall script, but for now, I plan on simply
+#firing up a recently imaged computer and then execute this script. I
+#will use kickstart for the basics alone (I have a simple kickstart
+#file that will partition my disks and create users.)
 
 
 
