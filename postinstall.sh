@@ -49,7 +49,7 @@ yum -y install unzip
 
 #I would like to set up some sort of log rotation scheme and upload logs to homeserver.
 
-#need to figure out how to use docker
+#need to figure out issue with docker
 
 #-------------------------------------------------
 #END OF IDEAS AND TODO SECTION
