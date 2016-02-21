@@ -45,7 +45,7 @@
 yum -y install screenfetch
 yum -y install vlc
 yum -y install unzip
-
+#Need to come up with a conky config
 
 #I would like to set up some sort of log rotation scheme and upload logs to homeserver.
 
@@ -81,6 +81,85 @@ INSTALLMETHOD="yum -y"
 #yum -y localinstall --nogpgcheck http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
 #echo "rpmfusion repos installation complete"
+
+#----------------------GET_MY_VIMRC_AND_SETUP______________________________
+
+#need to decide on the method I want to use for gitcloning my dotfiles which#will include my .vimrc
+
+#get vundle for plugin management
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
+#need to decide if I am going to add in the vundle .vimrc lines fresh, or
+#have them in my .vimrc that is hosted on gihub beforehand
+
+#--------------------------CONFIGURE_VIM_AND_PLUGINS----------------------------
+
+git clone https://github.com/VundleVim/Vundle.vim.git /home/donnie/.vim/bundle
+
+#need to make sure vimrc has the required entries for vundle before bringing it over. 
+
+#May just want to spit out instructions to do the rest manually.
+
+vim +PluginInstall +qall
+
+dnf -y install automake gcc gcc-c++ kernel-devel cmake
+
+dnf -y install python-devel
+
+yum -y install golang
+
+mkdir /home/donnie/goworkspace
+echo 'export GOPATH="home/donnie/goworkspace"' >> ~/.bashrc
+source ~/.bashrc 
+
+http://blog.teamtreehouse.com/install-node-js-npm-linux'
+
+sudo yum groupinstall 'Development Tools' && sudo yum install curl git m4 ruby texinfo bzip2-devel curl-devel expat-devel ncurses-devel zlib-devel
+
+"at this point, need to become donnie"
+
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/linuxbrew/go/install)"
+
+export PATH="$HOME/.linuxbrew/bin:$PATH"
+export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
+export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
+
+brew install node
+
+npm install -g typescript
+
+curl -sSf https://static.rust-lang.org/rustup.sh | sh
+
+cd .vim/bundle/YouCompleteMe/
+
+./install.py --clang-completer --omnisharp-completer --gocode-completer     --tern-completer --racer-completer
+
+#####VIM PLUGINS THAT WILL NEED TO BE INSTALLED
+
+'scrooloose/syntastic'
+'bling/vim-airline'
+'SirVer/ultisnips'
+'edsono/vim-matchit'
+'elzr/vim-json'
+'honza/vim-snippets'
+'justinmk/vim-sneak'
+'kien/ctrlp.vim'
+'ludovicchabant/vim-lawrencium'
+'majutsushi/tagbar'
+'mhinz/vim-signify'
+'plasticboy/vim-markdown'
+'scrooloose/nerdcommenter'
+'sjl/gundo.vim'
+'tpope/vim-fugitive'
+'tpope/vim-sleuth'
+'tpope/vim-surround'
+'tryu/open-browser.vim'
+'vim-scripts/a.vim'
+'tomasr/molokai'
+'flazz/vim-colorschemes'
+'SQLComplete.vim'
+'dbext.vim'
+
 
 
 
