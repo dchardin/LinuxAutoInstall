@@ -1,86 +1,116 @@
 #!/bin/bash
-
-
-#please note that this script is very dirty and still very much
-#in-progress. Totally disorganized and mostly untested. At this point,
-#it has Fedora 23 XFCE in mind, but you
-#will still see some deprecated commands (like yum install instead of
-#dnf install". The whole purpose of this script is for me to be able to
-#quickly deploy a Fedora 23 desktop system that is customized to my
-#liking. Why am I not doing this with Kickstart you ask? Well, I have
-#had mixed experiencecs with kickstart when it comes to installing
-#packages. The installation often hangs, or the package will be listed
-#as "not available". In time, this script may be better integrated as a
-#true kickstart postinstall script, but for now, I plan on simply
-#firing up a recently imaged computer and then execute this script. I
-#will use kickstart for the basics alone (I have a simple kickstart
-#file that will partition my disks and create users.)
-
-
-
-
-#THE FOLLOWING IS A SECTION FOR IDEAS AND TODO----
-#-------------------------------------------------
+#===============================================================================
+# LINUX AUTO INSTALL
+# By dchardin <donnie@fedoraproject.org>
 #
-#Maybe set the desired options for log files, such as the 
-#yum log? Maybe cat any yum install commands used into a special
-#section of this script for future installation?
-#
-#need to autoconfig xchat sounds, connect to znc, etc.
-#need to bring over .bashrc
-#need to bring over .vimrc
-#need to bring over my own bash scripts and place them into their proper spot
-#need to properly set up yumlog monitoring
-#need to install ssh
-#need to change /etc/ssh/sshd_config to enable password and set port
-#need to chkconfig sshd on and service sshd start
-#need to open the port via firewall
-#need to paste in asciiart greeting for ssh
-#add me to the sudoers file
+# Please note that this script is very dirty and still very much in-progress.
+# 
+# Totally disorganized and mostly untested. At this point, it has Fedora 23
+# XFCE in mind, but you will still see some deprecated commands (like yum
+# install instead of dnf install". The whole purpose of this script is for me
+# to be able to quickly deploy a Fedora 23 desktop system that is customized to
+# my liking. Why am I not doing this with Kickstart you ask? Well, I have had
+# mixed experiencecs with kickstart when it comes to installing packages. The
+# installation often hangs, or the package will be listed as "not available".
+# In time, this script may be better integrated as a true kickstart postinstall
+# script, but for now, I plan on simply firing up a recently imaged computer
+# and then execute this script. I will use kickstart for the basics alone (I
+# have a simple kickstart file that will partition my disks and create users.)
+#===============================================================================
 
-#yum install -y https://github.com/fastrizwaan/fedora-rizvan/raw/master/fedora-rizvan-repo-1.0-2.noarch.rpm
+#-------------------------------------------------------------------------------
+# TODO
+#
+# Maybe set the desired options for log files, such as the #yum log? Maybe cat
+# any yum install commands used into a special #section of this script for
+# future installation?
+#
+# - need to autoconfig xchat sounds, connect to znc, etc.
+# - need to bring over .bashrc
+# - need to bring over .vimrc
+# - need to bring over my own bash scripts and place them into their proper spot
+# - need to properly set up yumlog monitoring
+# - need to install ssh
+# - need to change /etc/ssh/sshd_config to enable password and set port
+# - need to chkconfig sshd on and service sshd start
+# - need to open the port via firewall
+# - need to paste in asciiart greeting for ssh
+# - add me to the sudoers file
+# - need to come up with a conky config
+# - I would like to set up some sort of log rotation scheme and upload logs to
+#   homeserver.
+# - need to figure out issue with docker
+# - need to decide on the method I want to use for gitcloning my dotfiles which
+#   will include my .vimrc
+# - need to decide if I am going to add in the vundle .vimrc lines fresh, or
+#   have them in my .vimrc that is hosted on gihub beforehand
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+# VARIABLES
+#-------------------------------------------------------------------------------
+MYUSER=donnie
+INSTALLMETHOD="yum -y"
+
+#-------------------------------------------------------------------------------
+# YUM Repos
+#-------------------------------------------------------------------------------
+
+
+#yum -y localinstall --nogpgcheck http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+
+#yum -y localinstall --nogpgcheck http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
+# Add Chrome
+touch /etc/yum.repos.d/google-chrome.repo
+chmod 2777 /etc/yum.repos.d/google-chrome.repo
+cat << EOF > /etc/yum.repos.d/google-chrome.repo
+[google-chrome]
+name=google-chrome - \$basearch
+baseurl=http://dl.google.com/linux/chrome/rpm/stable/\$basearch
+enabled=1
+gpgcheck=0
+gpgkey=https://dl-ssl.google.com/linux/linux_signing_key.pub
+EOF
+
+# Add Insync Repo
+touch /etc/yum.repos.d/insync.repo
+cat << EOF > /etc/yum.repos.d/insync.repo
+[insync]
+name=insync repo
+baseurl=http://yum.insynchq.com/fedora/$releasever/
+enabled=1
+gpgcheck=0
+EOF
+
+# Add Steam Repo
+dnf config-manager --add-repo=http://negativo17.org/repos/fedora-steam.repo
+
+# Add Virtualbox Repo
+cd /etc/yum.repos.d/
+wget http://download.virtualbox.org/virtualbox/rpm/fedora/virtualbox.repo
+
+
+# Add rizvan repo
+yum install -y https://github.com/fastrizwaan/fedora-rizvan/raw/master/fedora-rizvan-repo-1.0-2.noarch.rpm
+
+
 #yum -y install simplescreenrecorder
 #yum -y install devede
 #yum -y install dvdstyler
 yum -y install screenfetch
 yum -y install vlc
 yum -y install unzip
-#Need to come up with a conky config
-
-#I would like to set up some sort of log rotation scheme and upload logs to homeserver.
-
-#need to figure out issue with docker
-
-#-------------------------------------------------
-#END OF IDEAS AND TODO SECTION
-
-
-#------------------------SECTION-FOR-VARIABLES----------------------------------
-
-MYUSER=donnie
-INSTALLMETHOD="yum -y"
-
-
-
-#--------------------END-OF-SECTION-FOR-VARIBALES-------------------------------
-
 
 
 #yum -y update
 
-#cd ~
 
-##the first thing we need to do is set up our repos
 
-#echo "installing repos"
 
-#echo "installing rpmfusion repos"
 
-#yum -y localinstall --nogpgcheck http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
 
-#yum -y localinstall --nogpgcheck http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
-#echo "rpmfusion repos installation complete"
 
 #----------------------GET_MY_VIMRC_AND_SETUP______________________________
 
