@@ -95,17 +95,51 @@ wget http://download.virtualbox.org/virtualbox/rpm/fedora/virtualbox.repo
 yum install -y https://github.com/fastrizwaan/fedora-rizvan/raw/master/fedora-rizvan-repo-1.0-2.noarch.rpm
 
 
-#yum -y install simplescreenrecorder
-#yum -y install devede
-#yum -y install dvdstyler
-yum -y install screenfetch
-yum -y install vlc
-yum -y install unzip
+#-------------------------------------------------------------------------------
+# YUM Install
+#-------------------------------------------------------------------------------
+yum -y update
+yum -y groupinstall  'Authoring and Publishing' 'Development Tools'
+yum -y install atop autokey-gtk automake binutils byzanz bzip2-devel cmake curl\
+curl-devel devilspie dkms dos2unix evince expat-devel expect gcc gcc-c++ git\
+glibc-devel glibc-headers gnupg golang google-chrome-stable gstreamer\
+gstreamer-ffmpeg gstreamer-plugins-bad gstreamer-plugins-bad-free\
+gstreamer-plugins-bad-free-extras gstreamer-plugins-bad-nonfree\
+gstreamer-plugins-base gstreamer-plugins-good gstreamer-plugins-ugly htop\
+insync k3b-extras-freeworld kernel-devel kernel-headers libdvbpsi libdvdcss\
+libdvdnav libdvdread libgomp lsdvd m4 make mercurial ncurses-devel nmap openssh\
+openvpn patch python-argparse python-devel python-urllib2_kerberos pytz ruby\
+rxvt screenfetch sound-juicer steam terminator texinfo tmux unzip vim\
+VirtualBox-5.0 vlc xchat xfreerdp xine-lib xine-lib-extras\
+xine-lib-extras-freeworld zlib-devel unzip vlc screenfetch dvdstyler devede\
+simplescreenrecorder 
+yum -y update
 
-
-#yum -y update
-
-
+#-------------------------------------------------------------------------------
+# LANGUAGE SUPPORT
+#-------------------------------------------------------------------------------
+# Go
+mkdir /home/donnie/goworkspace
+echo 'export GOPATH="home/donnie/goworkspace"' >> ~/.bashrc
+source ~/.bashrc
+# Javascript
+http://blog.teamtreehouse.com/install-node-js-npm-linux'
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/linuxbrew/go/install)"
+export PATH="$HOME/.linuxbrew/bin:$PATH"
+export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
+export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
+brew install node
+npm install -g typescript
+# Rust
+curl -sSf https://static.rust-lang.org/rustup.sh | sh
+#-------------------------------------------------------------------------------
+# VIM SETUP
+#-------------------------------------------------------------------------------
+# get vundle for plugin management
+git clone https://github.com/VundleVim/Vundle.vim.git /home/donnie/.vim/bundle
+vim +PluginInstall +qall
+cd .vim/bundle/YouCompleteMe/
+./install.py --clang-completer --omnisharp-completer --gocode-completer     --tern-completer --racer-completer
 
 
 
@@ -114,7 +148,6 @@ yum -y install unzip
 
 #----------------------GET_MY_VIMRC_AND_SETUP______________________________
 
-#need to decide on the method I want to use for gitcloning my dotfiles which#will include my .vimrc
 
 #get vundle for plugin management
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
