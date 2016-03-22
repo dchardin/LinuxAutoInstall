@@ -528,7 +528,7 @@ chown donnie /home/donnie/.config/autostart/devil.sh
 chmod 2777 /home/donnie/.config/autostart/devil.sh
 cat << EOF > /home/donnie/.config/autostart/devil.sh
 #!/bin/bash
-roxterm --profile=DesktopConsole --hide-menubar --title=DesktopConsole --role=borderless
+devilspie & roxterm --profile=DesktopConsole --hide-menubar --title=DesktopConsole --role=borderless
 EOF
 
 #install git
