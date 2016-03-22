@@ -44,6 +44,8 @@
 #   will include my .vimrc
 # - need to decide if I am going to add in the vundle .vimrc lines fresh, or
 #   have them in my .vimrc that is hosted on gihub beforehand
+# - come up with a way to capture the entire output of all dnf and 
+# - yum installs, and save to files. 
 #-------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------------
@@ -57,7 +59,12 @@ INSTALLMETHOD="yum -y"
 #-------------------------------------------------------------------------------
 
 
+# For all of these localinstall commands, need to use variable. DNF cannot be 
+# called to perform in this fashion.
+
 #yum -y localinstall --nogpgcheck http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+
+
 
 #yum -y localinstall --nogpgcheck http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
@@ -91,13 +98,41 @@ cd /etc/yum.repos.d/
 wget http://download.virtualbox.org/virtualbox/rpm/fedora/virtualbox.repo
 
 
+##this one is dead
+
 # Add rizvan repo
 yum install -y https://github.com/fastrizwaan/fedora-rizvan/raw/master/fedora-rizvan-repo-1.0-2.noarch.rpm
+
+#Add Docker
+
+touch /etc/yum.repos.d/docker.repo
+cat << EOF > /etc/yum.repos.d/docker.repo
+[dockerrepo]
+name=Docker Repository
+baseurl=https://yum.dockerproject.org/repo/main/fedora/$releasever/
+enabled=1
+gpgcheck=1
+gpgkey=https://yum.dockerproject.org/gpg
+EOF
+
+
+
+
+
+
+
+
+
 
 
 #-------------------------------------------------------------------------------
 # YUM Install
 #-------------------------------------------------------------------------------
+
+# going to have to look at how these newlines are being done. package names are
+# globbing together. Also having trouble finding libdvbcss and
+# simplescreenrecorder
+
 yum -y update
 yum -y groupinstall  'Authoring and Publishing' 'Development Tools'
 yum -y install atop autokey-gtk automake binutils byzanz bzip2-devel cmake curl\
@@ -114,6 +149,46 @@ VirtualBox-5.0 vlc xchat xfreerdp xine-lib xine-lib-extras\
 xine-lib-extras-freeworld zlib-devel unzip vlc screenfetch dvdstyler devede\
 simplescreenrecorder 
 yum -y update
+
+dnf -y install qt5-qtbase qt5-qtbase-devel qt5-qtdeclarative qt5-qtdeclarative-devel qt5-qtgraphicaleffects qt5-qtquickcontrols redhat-rpm-config
+
+
+#-------------------------------------------------------------------------------
+#DOCKER
+#-------------------------------------------------------------------------------
+dnf -y install docker-engine
+systemctl enable docker
+usermod -aG docker donnie
+
+
+
+#-------------------------------------------------------------------------------
+#LOOK AND FEEL
+#-------------------------------------------------------------------------------
+su - donnie
+mkdir /home/donnie/GIT
+cd /home/donnie/GIT
+git clone https://github.com/dchardin/AppPacksAndMore.git
+su -
+cd /home/donnie/GIT/AppPacksAndMore
+mkdir /usr/share/backgrounds/wallpapers
+mv wallpapers.tar /usr/share/backgrounds/wallpapers
+cd /usr/share/backgrounds/wallpapers
+tar -xvf wallpapers.tar
+mv /usr/share/backgrounds/default.png /usr/share/backgrounds/default.png.old
+mv /usr/share/backgrounds/wallpapers/2015-10-22_00012.jpg ../default.png
+
+# at this time, you need to open up applications/settings/desktop
+# and set your desktop folder to /usr/share/wallpapers. Set the 
+# background to change every 10 min or so.
+# Then click the MENU tab, uncheck "show applicatoin icons in menu
+# Then on ICON tab, select icon type None.
+
+
+
+
+
+
 
 #-------------------------------------------------------------------------------
 # LANGUAGE SUPPORT
@@ -164,6 +239,7 @@ git clone https://github.com/VundleVim/Vundle.vim.git /home/donnie/.vim/bundle
 #May just want to spit out instructions to do the rest manually.
 
 vim +PluginInstall +qall
+
 
 dnf -y install automake gcc gcc-c++ kernel-devel cmake
 
@@ -368,7 +444,7 @@ yum -y install devilspie
 #EOF
 
 mkdir /home/donnie/.devilspie/
-mkdir /home/donnie/.devilspie/DesktopConsole.ds
+touch /home/donnie/.devilspie/DesktopConsole.ds
 chown donnie /home/donnie/.devilspie/DesktopConsole.ds
 cat << EOF > /home/donnie/.devilspie/DesktopConsole.ds
 (if
@@ -386,7 +462,10 @@ cat << EOF > /home/donnie/.devilspie/DesktopConsole.ds
 )
 EOF
 
-#this will not work: need to manually create the files.
+
+mkdir /home/donnie/.config/roxterm.sourceforge.net
+touch /home/donnie/.config/roxterm.sourceforge.net/Global
+chown donnie /home/donnie/.config/roxterm.sourceforge.net/Global
 
 cat << EOF > /home/donnie/.config/roxterm.sourceforge.net/Global
 [roxterm options]
@@ -397,7 +476,10 @@ encoding=UTF-8
 prefer_dark_theme=1
 EOF
 
-mkdir /home/donnie/.config/roxterm.sourceforge.net/Profiles/DesktopConsole
+#need to insert logic to check if directory already exists
+
+
+mkdir /home/donnie/.config/roxterm.sourceforge.net/Profiles
 touch /home/donnie/.config/roxterm.sourceforge.net/Profiles/DesktopConsole
 chown donnie /home/donnie/.config/roxterm.sourceforge.net/Profiles/DesktopConsole
 
@@ -423,6 +505,8 @@ colour_scheme=GTK
 width=100
 height=30
 EOF
+
+#Need to add in logic to check if directory already exists
 
 mkdir /home/donnie/.config/autostart/
 cd /home/donnie/.config/autostart/
