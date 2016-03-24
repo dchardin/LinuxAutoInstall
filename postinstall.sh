@@ -53,6 +53,8 @@
 #-------------------------------------------------------------------------------
 MYUSER=donnie
 INSTALLMETHOD="yum -y"
+GITHUBID=dchardin
+GITHUBEMAIL=dch84121@gmail.com
 
 #-------------------------------------------------------------------------------
 # YUM Repos
@@ -152,6 +154,17 @@ yum -y update
 
 dnf -y install qt5-qtbase qt5-qtbase-devel qt5-qtdeclarative qt5-qtdeclarative-devel qt5-qtgraphicaleffects qt5-qtquickcontrols redhat-rpm-config
 
+
+
+#-------------------------------------------------------------------------------
+#Git and Github config
+#-------------------------------------------------------------------------------
+
+su - $MYUSER
+git config --global user.name "$GITHUBID"
+git config --global user.email "$GITHUBEMAIL"
+git config --global credential.helper cache
+git config --global credential.helper 'cache --timeout=3600'
 
 #-------------------------------------------------------------------------------
 #DOCKER
