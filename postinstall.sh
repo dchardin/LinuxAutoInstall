@@ -544,6 +544,15 @@ cat << EOF > /home/donnie/.config/autostart/devil.sh
 devilspie & roxterm --profile=DesktopConsole --hide-menubar --title=DesktopConsole --role=borderless
 EOF
 
+
+touch /home/donnie/.config/autostart/clearsessions.sh
+chown donnie /home/donnie/.config/autostart/clearsessions.sh
+chmod 2777 /home/donnie/.config/autostart/clearsessions.sh
+cat << EOF > /home/donnie/.config/autostart/clearsessions.sh
+#!/bin/bash
+rm -rf /home/*/.cache/sessions/*
+EOF
+
 #install git
 
 yum -y install git
