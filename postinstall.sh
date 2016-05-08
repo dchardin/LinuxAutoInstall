@@ -45,7 +45,9 @@
 # - need to decide if I am going to add in the vundle .vimrc lines fresh, or
 #   have them in my .vimrc that is hosted on gihub beforehand
 # - come up with a way to capture the entire output of all dnf and 
-# - yum installs, and save to files. 
+# - yum installs, and save to files.
+# - add weechat configs with connect to znc
+# - add rename.pl to augment rename 
 #-------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------------
