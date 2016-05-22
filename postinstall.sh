@@ -69,7 +69,6 @@ GITHUBEMAIL=dch84121@gmail.com
 #yum -y localinstall --nogpgcheck http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
 
 
-
 #yum -y localinstall --nogpgcheck http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
 # Add Chrome
@@ -120,6 +119,11 @@ gpgkey=https://yum.dockerproject.org/gpg
 EOF
 
 
+#Add Adobe for flash support
+
+rpm -ivh http://linuxdownload.adobe.com/adobe-release/adobe-release-x86_64-1.0-1.noarch.rpm
+rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-adobe-linux
+
 
 
 
@@ -156,7 +160,7 @@ yum -y update
 
 dnf -y install qt5-qtbase qt5-qtbase-devel qt5-qtdeclarative qt5-qtdeclarative-devel qt5-qtgraphicaleffects qt5-qtquickcontrols redhat-rpm-config
 
-
+dnf install flash-plugin nspluginwrapper alsa-plugins-pulseaudio libcurl
 
 #-------------------------------------------------------------------------------
 #Git and Github config
