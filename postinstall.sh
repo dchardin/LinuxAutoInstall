@@ -174,6 +174,8 @@ dnf -y install qt5-qtbase qt5-qtbase-devel qt5-qtdeclarative qt5-qtdeclarative-d
 
 dnf install flash-plugin nspluginwrapper alsa-plugins-pulseaudio libcurl
 
+dnf install gpick
+
 #-------------------------------------------------------------------------------
 #Git and Github config
 #-------------------------------------------------------------------------------
