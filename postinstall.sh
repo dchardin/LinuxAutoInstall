@@ -125,6 +125,18 @@ rpm -ivh http://linuxdownload.adobe.com/adobe-release/adobe-release-x86_64-1.0-1
 rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-adobe-linux
 
 
+touch /etc/yum.repos.d/opera.repo
+cat << EOF > /etc/yum.repos.d/opera.repo
+[opera]
+name=Opera packages
+type=rpm-md
+baseurl=https://rpm.opera.com/rpm
+gpgcheck=1
+gpgkey=https://rpm.opera.com/rpmrepo.key
+enabled=1
+EOF
+
+dnf -y install opera-developer
 
 
 
