@@ -258,14 +258,10 @@ cd .vim/bundle/YouCompleteMe/
 
 
 #get vundle for plugin management
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-
-#need to decide if I am going to add in the vundle .vimrc lines fresh, or
-#have them in my .vimrc that is hosted on gihub beforehand
 
 #--------------------------CONFIGURE_VIM_AND_PLUGINS----------------------------
 
-git clone https://github.com/VundleVim/Vundle.vim.git /home/donnie/.vim/bundle
+git clone https://github.com/VundleVim/Vundle.vim.git /home/donnie/.vim/bundle/Vundle.vim
 
 #need to make sure vimrc has the required entries for vundle before bringing it over. 
 
@@ -276,7 +272,7 @@ vim +PluginInstall +qall
 
 dnf -y install automake gcc gcc-c++ kernel-devel cmake
 
-dnf -y install python-devel
+dnf -y install python-devel --best
 
 yum -y install golang
 
@@ -302,38 +298,21 @@ npm install -g typescript
 
 curl -sSf https://static.rust-lang.org/rustup.sh | sh
 
-cd .vim/bundle/YouCompleteMe/
 
-./install.py --clang-completer --omnisharp-completer --gocode-completer     --tern-completer --racer-completer
+##At this point, need to get the vimrc file
 
-#####VIM PLUGINS THAT WILL NEED TO BE INSTALLED
-
-'scrooloose/syntastic'
-'bling/vim-airline'
-'SirVer/ultisnips'
-'edsono/vim-matchit'
-'elzr/vim-json'
-'honza/vim-snippets'
-'justinmk/vim-sneak'
-'kien/ctrlp.vim'
-'ludovicchabant/vim-lawrencium'
-'majutsushi/tagbar'
-'mhinz/vim-signify'
-'plasticboy/vim-markdown'
-'scrooloose/nerdcommenter'
-'sjl/gundo.vim'
-'tpope/vim-fugitive'
-'tpope/vim-sleuth'
-'tpope/vim-surround'
-'tryu/open-browser.vim'
-'vim-scripts/a.vim'
-'tomasr/molokai'
-'flazz/vim-colorschemes'
-'SQLComplete.vim'
-'dbext.vim'
+cd /home/donnie/
+mv .vimrc .vimrc.old
+wget https://raw.githubusercontent.com/dchardin/dotfiles/master/vimrc
+mv vimrc .vimrc
 
 
 
+#the rest must be done manually
+#vim +PluginInstall +qall
+#cd .vim/bundle/YouCompleteMe/
+
+#./install.py --clang-completer --omnisharp-completer --gocode-completer     --tern-completer --racer-completer
 
 #---------------------------SET-HOSTNAME----------------------------------------
 
