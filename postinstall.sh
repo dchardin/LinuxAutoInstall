@@ -428,6 +428,106 @@ yum -y groupinstall "Authoring and Publishing"
 #see http://www.if-not-true-then-false.com/2014/install-oracle-java-8-on-fedora-centos-rhel/
 
 
+#NOTE: Since github has a filesize limitation and jdk-8u91-linux-x64.rpm exceeds
+#it, you will need to manually download the rpm first. Place it in /root/
+
+#need to write in some logic to have it retry if exit status 1
+
+
+cd /root/
+
+dnf -y install jdk-8u91-linux-x64.rpm
+
+
+#4a. Install Sun/Oracle JDK java, javaws, libjavaplugin.so (for Firefox/Mozilla) and javac with alternatives –install command
+#Use Java JDK latest version (/usr/java/latest)
+
+
+## java ##
+alternatives --install /usr/bin/java java /usr/java/latest/jre/bin/java 200000
+## javaws ##
+alternatives --install /usr/bin/javaws javaws /usr/java/latest/jre/bin/javaws 200000
+
+## Java Browser (Mozilla) Plugin 32-bit ##
+#alternatives --install /usr/lib/mozilla/plugins/libjavaplugin.so libjavaplugin.so /usr/java/latest/jre/lib/i386/libnpjp2.so 200000
+
+## Java Browser (Mozilla) Plugin 64-bit ##
+alternatives --install /usr/lib64/mozilla/plugins/libjavaplugin.so libjavaplugin.so.x86_64 /usr/java/latest/jre/lib/amd64/libnpjp2.so 200000
+
+## Install javac only if you installed JDK (Java Development Kit) package ##
+alternatives --install /usr/bin/javac javac /usr/java/latest/bin/javac 200000
+alternatives --install /usr/bin/jar jar /usr/java/latest/bin/jar 200000
+
+
+#Use Java JDK 8u91 absolute version (/usr/java/jdk1.8.0_91)
+
+
+## java ##
+alternatives --install /usr/bin/java java /usr/java/jdk1.8.0_91/jre/bin/java 200000
+## javaws ##
+alternatives --install /usr/bin/javaws javaws /usr/java/jdk1.8.0_91/jre/bin/javaws 200000
+
+## Java Browser (Mozilla) Plugin 32-bit ##
+#alternatives --install /usr/lib/mozilla/plugins/libjavaplugin.so libjavaplugin.so /usr/java/jdk1.8.0_91/jre/lib/i386/libnpjp2.so 200000
+
+## Java Browser (Mozilla) Plugin 64-bit ##
+alternatives --install /usr/lib64/mozilla/plugins/libjavaplugin.so libjavaplugin.so.x86_64 /usr/java/jdk1.8.0_91/jre/lib/amd64/libnpjp2.so 200000
+
+## Install javac only if you installed JDK (Java Development Kit) package ##
+alternatives --install /usr/bin/javac javac /usr/java/jdk1.8.0_91/bin/javac 200000
+alternatives --install /usr/bin/jar jar /usr/java/jdk1.8.0_91/bin/jar 200000
+
+
+#4b. Install Sun/Oracle JRE java, javaws and libjavaplugin.so (for Firefox/Mozilla) with alternatives –install command
+#Use Java JRE latest version (/usr/java/latest)
+
+## java ##
+alternatives --install /usr/bin/java java /usr/java/latest/bin/java 200000
+ 
+## javaws ##
+alternatives --install /usr/bin/javaws javaws /usr/java/latest/bin/javaws 200000
+ 
+## Java Browser (Mozilla) Plugin 32-bit ##
+#alternatives --install /usr/lib/mozilla/plugins/libjavaplugin.so libjavaplugin.so /usr/java/latest/lib/i386/libnpjp2.so 200000
+ 
+## Java Browser (Mozilla) Plugin 64-bit ##
+alternatives --install /usr/lib64/mozilla/plugins/libjavaplugin.so libjavaplugin.so.x86_64 /usr/java/latest/lib/amd64/libnpjp2.so 200000
+ 
+
+#Use Java JRE 8u91 absolute version (/usr/java/jre1.8.0_91)
+
+## java ##
+alternatives --install /usr/bin/java java /usr/java/jre1.8.0_91/bin/java 200000
+
+## javaws ##
+alternatives --install /usr/bin/javaws javaws /usr/java/jre1.8.0_91/bin/javaws 200000
+
+## Java Browser (Mozilla) Plugin 32-bit ##
+#alternatives --install /usr/lib/mozilla/plugins/libjavaplugin.so libjavaplugin.so /usr/java/jre1.8.0_91/lib/i386/libnpjp2.so 200000
+
+## Java Browser (Mozilla) Plugin 64-bit ##
+alternatives --install /usr/lib64/mozilla/plugins/libjavaplugin.so libjavaplugin.so.x86_64 /usr/java/jre1.8.0_91/lib/amd64/libnpjp2.so 200000
+
+
+echo "Java Install Complete. Use java -version and javaac version to see details. Use alternatives --config [ java | javaws | libjavaplugin.so.x86_64 | javac | ] to swap components in and out."
+
+#postinstallation setup java
+
+#Java JDK and JRE latest version (/usr/java/latest)
+ 
+## export JAVA_HOME JDK/JRE ##
+export JAVA_HOME="/usr/java/latest"
+
+#Java JDK and JRE absolute version (/usr/java/jdk1.8.0_91)
+## export JAVA_HOME JDK ##
+export JAVA_HOME="/usr/java/jdk1.8.0_91"
+ 
+## export JAVA_HOME JRE ##
+export JAVA_HOME="/usr/java/jre1.8.0_91"
+
+
+
+
 #dnf -y install eclipse-platform
 
 #need to manually download and configure aptana plugin
