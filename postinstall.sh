@@ -226,20 +226,40 @@ mv /usr/share/backgrounds/wallpapers/2015-10-22_00012.jpg ../default.png
 #-------------------------------------------------------------------------------
 # LANGUAGE SUPPORT
 #-------------------------------------------------------------------------------
+
 # Go
+
 mkdir /home/donnie/goworkspace
+
 echo 'export GOPATH="home/donnie/goworkspace"' >> ~/.bashrc
+
 source ~/.bashrc
+
 # Javascript
+
 http://blog.teamtreehouse.com/install-node-js-npm-linux'
+
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/linuxbrew/go/install)"
-export PATH="$HOME/.linuxbrew/bin:$PATH"
-export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
-export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
+
+echo 'export PATH="$HOME/.linuxbrew/bin:$PATH"' >> ~/.bashrc
+
+
+echo 'export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"' >> ~/.bashrc
+
+
+echo 'export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"' >> ~/.bashrc
+
+
+
 brew install node
+
 npm install -g typescript
+
 # Rust
+
 curl -sSf https://static.rust-lang.org/rustup.sh | sh
+
+
 #-------------------------------------------------------------------------------
 # VIM SETUP
 #-------------------------------------------------------------------------------
