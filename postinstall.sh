@@ -139,7 +139,15 @@ EOF
 dnf -y install opera-developer
 
 
+#-------------------------------------------------------------------------------
+# i3 tiling window manager setup
+#-------------------------------------------------------------------------------
 
+# as nonroot, run
+
+sudo dnf install i3 i3status dmenu i3lock xbacklight feh conky
+
+#then log out and log in choosing the i3 session.
 
 
 
