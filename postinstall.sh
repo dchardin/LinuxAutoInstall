@@ -48,6 +48,7 @@
 # - yum installs, and save to files.
 # - add weechat configs with connect to znc
 # - add rename.pl to augment rename 
+# - need to script out my screenshot shortcuts
 #-------------------------------------------------------------------------------
 
 #-------------------------------------------------------------------------------
