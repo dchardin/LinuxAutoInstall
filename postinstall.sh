@@ -164,26 +164,100 @@ sudo dnf install i3 i3status dmenu i3lock xbacklight feh conky
 
 yum -y update
 yum -y groupinstall  'Authoring and Publishing' 'Development Tools'
-yum -y install atop autokey-gtk automake binutils byzanz bzip2-devel cmake curl\
-curl-devel devilspie dkms dos2unix evince expat-devel expect gcc gcc-c++ git\
-glibc-devel glibc-headers gnupg golang google-chrome-stable gstreamer\
-gstreamer-ffmpeg gstreamer-plugins-bad gstreamer-plugins-bad-free\
-gstreamer-plugins-bad-free-extras gstreamer-plugins-bad-nonfree\
-gstreamer-plugins-base gstreamer-plugins-good gstreamer-plugins-ugly htop\
-insync k3b-extras-freeworld kernel-devel kernel-headers libdvbpsi libdvdcss\
-libdvdnav libdvdread libgomp lsdvd m4 make mercurial ncurses-devel nmap openssh\
-openvpn patch python-argparse python-devel python-urllib2_kerberos pytz ruby\
-rxvt screenfetch sound-juicer steam terminator texinfo tmux unzip vim\
-VirtualBox-5.0 vlc xchat xfreerdp xine-lib xine-lib-extras\
-xine-lib-extras-freeworld zlib-devel unzip vlc screenfetch dvdstyler devede\
-simplescreenrecorder 
-yum -y update
 
-dnf -y install qt5-qtbase qt5-qtbase-devel qt5-qtdeclarative qt5-qtdeclarative-devel qt5-qtgraphicaleffects qt5-qtquickcontrols redhat-rpm-config
+app_packages=( \
+"atop" \
+"autokey-gtk" \
+"automake" \
+"binutils" \
+"byzanz" \
+"bzip2-devel" \
+"cmake" \
+"curl" \
+"curl-devel" \
+"devilspie" \
+"dkms" \
+"dos2unix" \
+"evince" \
+"expat-devel" \
+"expect" \
+"gcc" \
+"gcc-c++" \
+"git" \
+"glibc-devel" \
+"glibc-headers" \
+"gnupg" \
+"golang" \
+"google-chrome-stable" \
+"gstreamer" \
+"gstreamer-ffmpeg" \
+"gstreamer-plugins-bad" \
+"gstreamer-plugins-bad-free" \
+"gstreamer-plugins-bad-free-extras" \
+"gstreamer-plugins-bad-nonfree" \
+"gstreamer-plugins-base" \
+"gstreamer-plugins-good" \
+"gstreamer-plugins-ugly" \
+"htop" \
+"hexchat" \
+"insync" \
+"k3b-extras-freeworld" \
+"kernel-devel" \
+"kernel-headers" \
+"libdvbpsi" \
+"libdvdcss" \
+"libdvdnav" \
+"libdvdread" \
+"libgomp" \
+"lsdvd" \
+"m4" \
+"make" \
+"mercurial" \
+"ncurses-devel" \
+"nmap" \
+"openssh" \
+"openvpn" \
+"patch" \
+"python-argparse" \
+"python-devel" \
+"python-urllib2_kerberos" \
+"pytz" \
+"ruby" \
+"rxvt" \
+"screen" \
+"screenfetch" \
+"sound-juicer" \
+"steam" \
+"terminator" \
+"texinfo" \
+"tmux" \
+"unzip" \
+"vim" \
+"vlc" \
+"xfreerdp" \
+"xine-lib" \
+"xine-lib-extras" \
+"xine-lib-extras-freeworld" \
+"zlib-devel" \
+"unzip" \
+"dvdstyler" \
+"devede" \
+"simplescreenrecorder" \
+"qt5-qtbase" \
+"qt5-qtbase-devel" \
+"qt5-qtdeclarative" \
+"qt5-qtdeclarative-devel" \
+"qt5-qtgraphicaleffects" \
+"qt5-qtquickcontrols" \
+"redhat-rpm-config" \
+"flash-plugin" \
+"nspluginwrapper" \
+"alsa-plugins-pulseaudio" \
+"libcurl" \
+"gpick" \
+)
 
-dnf install flash-plugin nspluginwrapper alsa-plugins-pulseaudio libcurl
 
-dnf install gpick
 
 #-------------------------------------------------------------------------------
 #Git and Github config
@@ -350,52 +424,8 @@ hostnamectl set-hostname --static "fed23laptop"
 #-------------------------END-SET-HOSTNAME--------------------------------------
 
 
-#------------------------INSTALL-GOOGLE-CHROME----------------------------------
-
-touch /etc/yum.repos.d/google-chrome.repo
-
-chmod 2777 /etc/yum.repos.d/google-chrome.repo
-
-cat << EOF > /etc/yum.repos.d/google-chrome.repo
-[google-chrome]
-name=google-chrome - \$basearch
-baseurl=http://dl.google.com/linux/chrome/rpm/stable/\$basearch
-enabled=1
-gpgcheck=0
-gpgkey=https://dl-ssl.google.com/linux/linux_signing_key.pub
-EOF
-
-echo "google chrome repo install complete"
-
-yum -y install google-chrome-stable
-
-echo "google chrome installed"
 
 #---------------------END-INSTALL-GOOGLE-CHROME---------------------------------
-
-#--------------------------INSTALL-STEAM----------------------------------------
-
-dnf config-manager --add-repo=http://negativo17.org/repos/fedora-steam.repo
-
-dnf -y install steam
-
-#------------------------END-INSTALL-STEAM--------------------------------------
-
-#--------------------------INSTALL INSYNC---------------------------------------
-
-touch /etc/yum.repos.d/insync.repo
-
-cat << EOF > /etc/yum.repos.d/insync.repo
-[insync]
-name=insync repo
-baseurl=http://yum.insynchq.com/fedora/$releasever/
-enabled=1
-gpgcheck=0
-EOF
-
-yum -y install insync
-
-#------------------------END-INSTALL-INSYNC-------------------------------------
 
 
 
@@ -407,7 +437,7 @@ wget http://download.virtualbox.org/virtualbox/rpm/fedora/virtualbox.repo
 
 dnf install binutils gcc make patch libgomp glibc-headers glibc-devel kernel-headers kernel-devel dkms
 
-dnf install VirtualBox-5.0
+dnf -y install VirtualBox-5.1
 
 /usr/lib/virtualbox/vboxdrv.sh setup
 
@@ -420,13 +450,7 @@ usermod -a -G vboxusers $MYUSER
 yum -y install python
 #need to store pycharm community rpm
 
-#--------------------END-INSTALL-PYTHON-PYCHARM---------------------------------
 
-#----------------------INSTALL-Auth/pubtools-----------------------------------
-
-yum -y groupinstall "Authoring and Publishing"
-
-#----------------------END-INSTALL-Auth/pubtools--------------------------------
 
 
 
@@ -547,11 +571,6 @@ cd /home/donnie/Downloads/
 wget http://37.187.115.107/fedora/23/x86_64/Packages/t/terminus-fonts-4.39-2.fc23.noarch.rpm
 dnf -y install terminus-fonts-4.39-2.fc23.noarch.rpm
 
-##Now for the rest
-
-yum -y install rxvt
-yum -y install terminator
-yum -y install devilspie
 
 ##need logic here to make sure that the config file is present
 
@@ -683,12 +702,7 @@ EOF
 
 #install git
 
-yum -y install git
 
-#install tools
-
-yum -y install vim 
-yum -y install tmux
 
 
 #clone dotfiles repo
@@ -698,32 +712,4 @@ git clone git://github.com/dchardin/dotfiles.git
 cd /home/donnie/dotfiles
 chmod 2777 makesymlinks.sh
 ./makesymlinks.sh
-
-
-
-
-yum -y install xchat
-yum -y install openssh
-yum -y install git
-yum -y install xfreerdp
-yum -y install expect
-yum -y install sound-juicer
-yum install -y mercurial pytz python-urllib2_kerberos python-argparse
-yum -y install openvpn
-yum -y install autokey-gtk
-
-yum -y install libdvdcss libdvdread libdvdnav lsdvd libdvbpsi gstreamer gstreamer-ffmpeg gstreamer-plugins-bad gstreamer-plugins-bad-free gstreamer-plugins-bad-free-extras gstreamer-plugins-bad-nonfree gstreamer-plugins-base gstreamer-plugins-good gstreamer-plugins-ugly k3b-extras-freeworld xine-lib xine-lib-extras xine-lib-extras-freeworld
-yum -y install gstreamer gstreamer-plugins-good gstreamer-plugins-bad gstreamer-plugins-ugly
-
-yum -y install gnupg
-yum -y install evince
-yum -y install byzanz
-yum -y install nmap
-yum -y install htop
-yum -y install atop
-yum -y install dos2unix
-
-
-
-
 
