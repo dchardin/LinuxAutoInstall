@@ -258,6 +258,20 @@ app_packages=( \
 )
 
 
+for i in "${arrayName[@]}"
+do
+
+	echo "Installing: " $i
+	yum -y install $i >~/Desktop/postinstall_log.txt 2>>~/Desktop/postinstall_errors.txt
+
+	if [ $? -ne $0 ]
+
+		echo "There was a problem installing " $i " see log file "
+
+	fi
+
+done
+
 
 #-------------------------------------------------------------------------------
 #Git and Github config
