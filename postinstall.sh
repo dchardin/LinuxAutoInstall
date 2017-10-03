@@ -314,7 +314,7 @@ mv /usr/share/backgrounds/wallpapers/2015-10-22_00012.jpg ../default.png
 # Then click the MENU tab, uncheck "show applicatoin icons in menu
 # Then on ICON tab, select icon type None.
 
-
+# Test Comment here
 
 
 
